@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <header class="flex justify-between items-center bg-white p-4 shadow-md">
+        <h1 class="text-xl font-bold">Меню</h1>
+        <a href="dgfhj.html" class="relative">
+            🛒 Корзина (<span id="cartCount">0</span>)
+        </a>
+    </header>
+
+    <div id="menu" class="grid grid-cols-2 md:grid-cols-3 gap-4 p-5"></div>
+
+    <script>
+        const menuItems = [
+            { id: 1, name: "Английский завтрак", price: 1740, image: "english-breakfast.jpg" },
+            { id: 2, name: "Американский завтрак", price: 1740, image: "american-breakfast.jpg" },
+            { id: 3, name: "Деревенский завтрак", price: 1640, image: "village-breakfast.jpg" }
+        ];
+
+        function loadMenu() {
+            const menuDiv = document.getElementById("menu");
+            menuDiv.innerHTML = "";
+
+            let selectedQuantities = JSON.parse(localStorage.getItem("selectedQuantities")) || {};
+
+            menuItems.forEach(item => {
+                let qty = selectedQuantities[item.id] || 1; // Load saved quantity or default to 1
+
+                menuDiv.innerHTML += `
+                    <div class="bg-white p-4 rounded shadow-md">
+                        <img src="${item.image}" class="w-full h-40 object-cover rounded">
+                        <h2 class="text-lg font-bold mt-2">${item.name}</h2>
+                        <p>${item.price} ₸</p>
+                        <div class="flex items-center mt-2">
+                            <button onclick="changeQuantity(${item.id}, -1)" class="px-2 bg-gray-300">-</button>
+                            <span id="qty-${item.id}" class="mx-2">${qty}</span>
+                            <button onclick="changeQuantity(${item.id}, 1)" class="px-2 bg-gray-300">+</button>
+                        </div>
+                        <button onclick="addToCart(${item.id})" class="mt-2 w-full bg-blue-500 text-white p-2 rounded">Добавить в корзину</button>
+                    </div>
+                `;
+            });
+            updateCartCount();
+        }
+
+        function changeQuantity(id, change) {
+            let selectedQuantities = JSON.parse(localStorage.getItem("selectedQuantities")) || {};
+            let qty = (selectedQuantities[id] || 1) + change;
+            if (qty < 1) qty = 1;
+
+            selectedQuantities[id] = qty;
+            localStorage.setItem("selectedQuantities", JSON.stringify(selectedQuantities));
+            document.getElementById(`qty-${id}`).innerText = qty;
+        }
+
+        function addToCart(id) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let selectedQuantities = JSON.parse(localStorage.getItem("selectedQuantities")) || {};
+            let qty = selectedQuantities[id] || 1;
+
+            let existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += qty;
+            } else {
+                let menuItem = menuItems.find(item => item.id === id);
+                cart.push({ ...menuItem, quantity: qty });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+            alert("Товар добавлен в корзину!");
+        }
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cartCount").innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        loadMenu();
+    </script>
+</body>
+</html>

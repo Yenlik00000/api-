@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Toggle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #009245;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: none;
+            flex-direction: column;
+            background: white;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #009245;
+            padding: 15px;
+            display: block;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu a:hover {
+            background: #f0f0f0;
+        }
+
+        .toggle {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Show menu when active */
+        .menu.active {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+        .flex{
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Responsive - Always show links on larger screens */
+        @media (min-width: 768px) {
+            .toggle {
+                display: none;
+            }
+
+            .menu {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background: none;
+                box-shadow: none;
+                width: auto;
+            }
+
+            .menu a {
+                border: none;
+                color: white;
+                padding: 10px 15px;
+            }
+
+            .menu a:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Toy Store</div>
+        <div class="toggle" onclick="toggleMenu()">☰</div>
+        <div class="menu">
+            <div class="flex">
+                <a href="#" class="home" onclick="toggleDropdown()">Home</a>
+                <div class="dropdown hidden">
+                    <a href="#">Option 1</a>
+                    <a href="#">Option 2</a>
+                    <a href="#">Option 3</a>
+                </div>
+            </div>
+            <a href="#">Shop</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".menu").classList.toggle("active");
+        }
+
+        function toggleDropdown() {
+            document.querySelector(".dropdown").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+</html>

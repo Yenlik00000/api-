@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Character Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            overflow: hidden;
+        }
+        .book {
+            width: 100px;
+            height: 140px;
+            background-color: brown;
+            position: relative;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .book img {
+            width: 90px;
+            height: 130px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            border-radius: 3px;
+        }
+        .character {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            transition: transform 0.5s ease-out;
+            border-radius: 50%;
+        }
+        .active .character {
+            transform: translateX(-50%) translateY(-100px) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="book" onclick="releaseCharacter()">
+        <img src="https://kids.scholastic.com/content/kids64/en/books/harry-potter/_jcr_content/root/responsivegrid/responsivegrid_1333535796/responsivegrid_47528/responsivegrid_19882_1411174914/image_copy_1366789715.coreimg.100.1285.png/1693509350230/5-hp-grandpre-refresh-phoenix-sm.png" alt="Book Cover">
+        <div class="character"></div>
+    </div>
+
+    <script>
+        function releaseCharacter() {
+            document.querySelector('.book').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

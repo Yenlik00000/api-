@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pr</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap');
+    .product {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+        flex: 0 0 250px;
+        min-height: 350px;
+    }
+
+    .product:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-img {
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .product:hover .product-img {
+        opacity: 0;
+    }
+
+    .hover-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .product:hover .hover-img {
+        opacity: 1;
+    }
+
+    .product-inf {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .product:hover .product-inf {
+        transform: translateY(-10px);
+    }
+
+    .carousel-container {
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        cursor: grab;
+        padding-bottom: 10px;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .carousel {
+        display: flex;
+        gap: 16px;
+        padding: 10px;
+    }
+
+    .add-to-cart-btn {
+        width: 100%;
+        background-color: #3b82f6;
+        color: white;
+        padding: 8px;
+        text-align: center;
+        border-radius: 9999px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .product:hover .add-to-cart-btn {
+        opacity: 1;
+    }
+</style>
+<body class="bg-gray-100">
+
+   
+
+    
+    
+    <header class="bg-teal-500">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <img class="bg-teal-500" src=" https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2024/09/light_logo.svg">
+            <!-- <div class="flex items-center space-x-2">
+                <img class="w-20" src="images/465954487_1130531612286783_1494499718764303613_n copy.png">
+                <h1 class="text-xl font-bold text-blue-900" style="font-family:'Sixtyfour Convergence';letter-spacing:0px;">Rêve d’Enfant</h1>
+            </div> -->
+        </div>
+    </header>
+    <div class="bg-teal-600 text-white text-sm py-2 px-4 flex justify-between">
+        <p class="flex gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M21 11.597V11h1V8h-1V6c0-2.206-1.794-4-4-4H7C4.794 2 3 3.794 3 6v2H2v3h1v.597a3.97 3.97 0 0 0-.999 2.648l.004 3.758c.001.733.404 1.369.995 1.716V21a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.274a2.02 2.02 0 0 0 .421-.313c.377-.378.585-.881.584-1.415l-.004-3.759A3.965 3.965 0 0 0 21 11.597zM8 4h8v2H8V4zM6.5 17a1.5 1.5 0 1 1 .001-3.001A1.5 1.5 0 0 1 6.5 17zm4.5-5H5V8h6v4zm6.5 5a1.5 1.5 0 1 1 .001-3.001A1.5 1.5 0 0 1 17.5 17zm1.5-5h-6V8h6v4z"></path></svg> Get Free home delivery (Order More than $300)</p>
+        <p class="flex gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:#fff;transform: ;msFilter:;"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z"></path></svg>info@gmail.com </p>  
+        <div class="flex gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="23" height="23" viewBox="0 0 256 256" xml:space="preserve">
+
+                <defs>
+                </defs>
+                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                    <path d="M 45 90 c -1.415 0 -2.725 -0.748 -3.444 -1.966 l -4.385 -7.417 C 28.167 65.396 19.664 51.02 16.759 45.189 c -2.112 -4.331 -3.175 -8.955 -3.175 -13.773 C 13.584 14.093 27.677 0 45 0 c 17.323 0 31.416 14.093 31.416 31.416 c 0 4.815 -1.063 9.438 -3.157 13.741 c -0.025 0.052 -0.053 0.104 -0.08 0.155 c -2.961 5.909 -11.41 20.193 -20.353 35.309 l -4.382 7.413 C 47.725 89.252 46.415 90 45 90 z" style="stroke: #ffff; stroke-width: 7; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill:none; fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 45 45.678 c -8.474 0 -15.369 -6.894 -15.369 -15.368 S 36.526 14.941 45 14.941 c 8.474 0 15.368 6.895 15.368 15.369 S 53.474 45.678 45 45.678 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10;  fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                </g>
+                </svg>
+                <p>Taraz St. Pushkin 154 </p>
+        </div>
+    </div>
+    <nav class="bg-teal-500 p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <input type="text" placeholder="Search..." class="p-2 rounded w-96">
+            <button class="bg-white text-teal-600 px-4 py-2 rounded"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path></svg></button>
+        </div>
+        <div class="flex items-center space-x-4 text-white">
+            <p class="flex gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="m20.487 17.14-4.065-3.696a1.001 1.001 0 0 0-1.391.043l-2.393 2.461c-.576-.11-1.734-.471-2.926-1.66-1.192-1.193-1.553-2.354-1.66-2.926l2.459-2.394a1 1 0 0 0 .043-1.391L6.859 3.513a1 1 0 0 0-1.391-.087l-2.17 1.861a1 1 0 0 0-.29.649c-.015.25-.301 6.172 4.291 10.766C11.305 20.707 16.323 21 17.705 21c.202 0 .326-.006.359-.008a.992.992 0 0 0 .648-.291l1.86-2.171a.997.997 0 0 0-.085-1.39z"></path></svg> 24/7 Support: +776-625-37-84</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);transform: ;msFilter:;"><path d="M12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595zm6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a.999.999 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002z"></path></svg></p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M21 9h-1.42l-3.712-6.496-1.736.992L17.277 9H6.723l3.146-5.504-1.737-.992L4.42 9H3a1.001 1.001 0 0 0-.965 1.263l2.799 10.264A2.005 2.005 0 0 0 6.764 22h10.473c.898 0 1.692-.605 1.93-1.475l2.799-10.263A.998.998 0 0 0 21 9zm-3.764 11v1-1H6.764L4.31 11h15.38l-2.454 9z"></path><path d="M9 13h2v5H9zm4 0h2v5h-2z"></path></svg></p>
+        </div>
+    </nav>
+
+    <!-- Carousel Section -->
+    <!-- <div class="container mx-auto mt-6 relative">
+        <div id="carousel" class="relative w-full overflow-hidden rounded-lg" style="height: 400px;"> -->
+            <!-- Slide 1 --
+            <!-- <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                <img src="https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2024/01/h1banner_1.png" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex flex-col justify-center p-10 bg-black bg-opacity-30">
+                    <h2 class="text-white text-4xl font-bold leading-tight">Внимание! <br> Главное — подарок</h2>
+                    <p class="text-white text-lg mt-2">Подарки для девочек на одной странице</p>
+                </div>
+            </div> -->
+            <!-- Slide 2 -->
+            <!-- <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2024/01/h1banner_1.png" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex flex-col justify-center p-10 bg-black bg-opacity-30">
+                    <h2 class="text-white text-4xl font-bold leading-tight">Игрушки <br> для всех возрастов</h2>
+                    <p class="text-white text-lg mt-2">Большой выбор товаров для детей</p>
+                </div>
+            </div> -->
+            <!-- Slide 3 -->
+            <!-- <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://source.unsplash.com/1600x600/?baby,clothes" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex flex-col justify-center p-10 bg-black bg-opacity-30">
+                    <h2 class="text-white text-4xl font-bold leading-tight">Одежда и обувь</h2>
+                    <p class="text-white text-lg mt-2">Лучший выбор для вашего малыша</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Pagination -->
+        <!-- <div class="flex justify-center space-x-2 mt-4">
+            <button class="dot w-3 h-3 bg-blue-400 rounded-full"></button>
+            <button class="dot w-3 h-3 bg-gray-300 rounded-full"></button>
+            <button class="dot w-3 h-3 bg-gray-300 rounded-full"></button>
+        </div>
+    </div> -->
+
+    <div class="container mx-auto">
+        <div class="grid grid-cols-2 gap-4">
+            <div id="lego-box" class="block p-6 bg-yellow-200 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+                <h2 class="text-xl font-bold">Скидки до 50% на LEGO</h2>
+                <p>Нажмите, чтобы узнать подробнее</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="p-10">
+        <div class="grid grid-cols-4 gap-6 mb-10">
+            <div class="flex justify-between bg-orange-100 p-4 rounded-lg shadow-md cursor-pointer  hover:scale-105 will-change-transform">
+                <div>
+                    <h3 class="font-semibold text-orange-600">Возврат денег</h3>
+                    <p class="text-gray-600">Гарантия возврата в течение<br> 7 дней.</p>
+                </div>
+                <p class="p-2 rounded-full bg-white relative" style="width: 70px;height:70px;"></p>
+                <img style="width: 50px;left:253px;top:23%;" class="absolute" src="https://cdn-icons-png.flaticon.com/512/536/536113.png">
+            </div>
+    
+            <div class="flex justify-between bg-blue-100 p-4 rounded-lg shadow-md cursor-pointer hover:scale-105 will-change-transform">
+                <div>
+                    <h3 class="font-semibold text-blue-600">Скидка для участников</h3>
+                    <p class="text-gray-600">На каждый заказ от $2000.</p>
+                </div>
+                <p class="p-2 rounded-full bg-white relative" style="width: 70px;height:70px;"></p>
+                <img style="width: 50px;left:253px;top:23%;" class="absolute" src="https://cdn2.iconfinder.com/data/icons/black-friday-130/512/32_Hot_shop_deal_sale-512.png">
+            </div>
+    
+            <div class="flex justify-between bg-green-100 p-4 rounded-lg shadow-md cursor-pointer hover:scale-105 will-change-transform">
+                <div>
+                    <h3 class="font-semibold text-xl text-green-600">Доставка на дом</h3>
+                    <p class="text-gray-600">Бесплатная доставка до<br> вашего дома.</p>
+                </div>
+                <p class="p-2 rounded-full bg-white relative" style="width: 70px;height:70px;"></p>
+                <img style="width: 50px;left:253px;top:23%;" class="absolute" src="https://cdn-icons-png.flaticon.com/512/3882/3882481.png">
+            </div>
+    
+            <div class="flex justify-between bg-pink-100 p-4 rounded-lg shadow-md cursor-pointer hover:scale-105 will-change-transform">
+                <div>
+                    <h3 class="font-semibold text-pink-600">Поддержка 24/7</h3>
+                    <p class="text-gray-600">Круглосуточная поддержка<br> клиентов.</p>
+                </div>
+                <p class="p-2 rounded-full bg-white relative" style="width: 70px;height:70px;"></p>
+                <img style="width: 50px;left:253px;top:23%;" class="absolute" src="https://cdn-icons-png.flaticon.com/512/78/78944.png">
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Популярные игрушки</h1>
+
+        <div class="carousel-container" id="carouselContainer">
+            <div id="carousel" class="carousel"></div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-100 py-10 mt-10 border-t" style="background-image: url('https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/themes/toyup/assets/element/footer-bottom-shape-3.svg');background-repeat:no-repeat; background-size:cover;">
+        <div class="container mx-auto px-6 md:flex md:justify-between">
+            <!-- QR Code Section -->
+            <div class="mb-6 md:mb-0">
+                <img src="https://via.placeholder.com/150" alt="QR Code" class="w-32 h-32">
+                <p class="text-gray-600 mt-2">Наведите камеру, чтобы скачать приложение</p>
+                <div class="flex mt-3 space-x-2">
+                    <img src="https://via.placeholder.com/40" alt="Apple Store">
+                    <img src="https://via.placeholder.com/40" alt="Google Play">
+                </div>
+            </div>
+
+            <!-- Store Info -->
+            <div class="mb-6 md:mb-0">
+                <h2 class="font-bold text-lg">Интернет-магазин</h2>
+                <ul class="text-gray-600 mt-2 space-y-1">
+                    <li><a href="#" class="hover:text-blue-500">Доставка и оплата</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Обмен и возврат товара</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Правила продажи</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Политика конфиденциальности</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Info -->
+            <div class="mb-6 md:mb-0">
+                <h2 class="font-bold text-lg">Компания</h2>
+                <ul class="text-gray-600 mt-2 space-y-1">
+                    <li><a href="#" class="hover:text-blue-500">О компании</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Инвесторам</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Пресс-центр</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Вакансии</a></li>
+                </ul>
+            </div>
+
+            <!-- Customer Info -->
+            <div class="mb-6 md:mb-0">
+                <h2 class="font-bold text-lg">Покупателям</h2>
+                <ul class="text-gray-600 mt-2 space-y-1">
+                    <li><a href="#" class="hover:text-blue-500">Подарочные карты</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Бонусные карты</a></li>
+                    <li><a href="#" class="hover:text-blue-500">Карта возврата</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Subscription -->
+            <div>
+                <h2 class="font-bold text-lg">Подписка</h2>
+                <div class="mt-3 flex">
+                    <input type="email" placeholder="Электронная почта" class="border px-4 py-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 transition">Подписаться</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Info -->
+        <div class="text-center text-gray-500 text-sm mt-6">
+            <p>© 2025 ТОО «Детский мир — Казахстан». Все права защищены.</p>
+            <div class="flex justify-center mt-2 space-x-2">
+                <img src="https://via.placeholder.com/40" alt="Visa">
+                <img src="https://via.placeholder.com/40" alt="MasterCard">
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mockToys = [
+            {
+                "id": 1,
+                "name": "Кубики для строительства",
+                "category": "Игры для дома",
+                "price": 46.00,
+                "old_price": 56.00,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_15-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Игровой набор с цифрами",
+                "category": "Игры для дома",
+                "price": 37.60,
+                "old_price": 51.00,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_05-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Сюрприз-яйцо с игрушками",
+                "category": "Игры для дома",
+                "price": 20.99,
+                "old_price": 36.00,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_16-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Конструктор LEGO",
+                "category": "Игры для дома",
+                "price": 9.69,
+                "old_price": 24.99,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_08-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Детская игровая площадка",
+                "category": "Игры для дома",
+                "price": 16.00,
+                "old_price": 56.00,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_03-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Детская гитара с маракасами",
+                "category": "Игры для дома",
+                "price": 66.00,
+                "old_price": 76.99,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2024/01/product_20-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Кубики с цифрами (Обучающие игрушки)",
+                "category": "Игры для дома",
+                "price": 23.56,
+                "old_price": 67.85,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_05-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Плюшевый мишка с сердцем",
+                "category": "Игры для дома",
+                "price": 12.89,
+                "old_price": 26.00,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_02-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+            {
+                "id": 2,
+                "name": "Игрушечная собака на колесиках",
+                "category": "Игры для дома",
+                "price": 44.78,
+                "old_price": 89.67,
+                "rating": 5.0,
+                "image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_10-484x373.png",
+                "hover_image": "https://www.radiustheme.com/demo/wordpress/themes/toyup/wp-content/uploads/2023/12/product_19-484x373.png"
+            },
+        ];
+
+        function displayToys(toys) {
+            const carousel = document.getElementById('carousel');
+            carousel.innerHTML = '';
+
+            toys.forEach(toy => {
+                const productHTML = `
+                    <div class="border border-1 p-4 rounded-lg product">
+                        <div class="relative w-full h-40">
+                            <img src="${toy.image}" alt="${toy.name}" class="w-full h-40 object-cover rounded product-img">
+                            <img src="${toy.hover_image}" alt="${toy.name}" class="hover-img rounded">
+                        </div>
+                        <div class="product-inf w-1/2">
+                            <h2 class="text-md font-semibold mt-2 ">${toy.name}</h2>
+                            <p class="text-gray-600">${toy.category}</p>
+                            <p class="text-gray-600">
+                                <span class="text-green-500 font-bold">$${toy.price.toFixed(2)}</span> 
+                                ${toy.old_price ? `<span class="line-through text-red-500">$${toy.old_price.toFixed(2)}</span>` : ''}
+                            </p>
+                            <p class="text-yellow-500">⭐ ${toy.rating}</p>
+                        </div>
+                        <button class="bg-teal-500 text-white px-4 py-2 rounded-3xl add-to-cart-btn hover:bg-orange-500" style="width:200px;">Добавить в корзину</button>
+                    </div>
+                `;
+                carousel.innerHTML += productHTML;
+            });
+        }
+
+        displayToys(mockToys);
+
+        const carouselContainer = document.getElementById('carouselContainer');
+        let isDragging = false;
+        let startX, scrollLeft;
+
+        carouselContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - carouselContainer.offsetLeft;
+            scrollLeft = carouselContainer.scrollLeft;
+            carouselContainer.style.cursor = 'grabbing';
+        });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            isDragging = false;
+            carouselContainer.style.cursor = 'grab';
+        });
+
+        carouselContainer.addEventListener('mouseup', () => {
+            isDragging = false;
+            carouselContainer.style.cursor = 'grab';
+        });
+
+        carouselContainer.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - carouselContainer.offsetLeft;
+            const walk = (x - startX) * 2; 
+            carouselContainer.scrollLeft = scrollLeft - walk;
+        });
+         
+    </script>
+    
+
+</body>
+</html>

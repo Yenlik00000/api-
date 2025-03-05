@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <header class="flex justify-between items-center bg-white p-4 shadow-md">
+        <a href="kish.html" class="text-blue-500">← Назад в меню</a>
+        <h1 class="text-xl font-bold">Корзина</h1>
+    </header>
+
+    <div id="cart" class="p-5"></div>
+
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartDiv = document.getElementById("cart");
+            cartDiv.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartDiv.innerHTML = "<p>Корзина пуста.</p>";
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartDiv.innerHTML += `
+                    <div class="bg-white p-4 rounded shadow-md flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="text-lg font-bold">${item.name}</h2>
+                            <p>${item.price} ₸ x <span id="cart-qty-${item.id}">${item.quantity}</span></p>
+                        </div>
+                        <div class="flex">
+                            <button onclick="changeCartQuantity(${item.id}, -1)" class="px-2 bg-gray-300">-</button>
+                            <button onclick="changeCartQuantity(${item.id}, 1)" class="px-2 bg-gray-300">+</button>
+                            <button onclick="removeFromCart(${item.id})" class="px-2 bg-red-500 text-white">Удалить</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartDiv.innerHTML += `
+                <h2 class="text-xl font-bold">Итого: ${total} ₸</h2>
+                <button onclick="checkout()" class="mt-4 w-full bg-green-500 text-white p-2 rounded">Оформить заказ</button>
+            `;
+        }
+
+        function changeCartQuantity(id, change) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let item = cart.find(item => item.id === id);
+
+            if (item) {
+                item.quantity += change;
+                if (item.quantity < 1) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                localStorage.setItem("cart", JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        function removeFromCart(id) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function checkout() {
+            alert("Заказ отправлен!");
+            localStorage.removeItem("cart");
+            localStorage.removeItem("selectedQuantities"); // Reset quantities after order
+            window.location.href = "kish.html";
+        }
+
+        loadCart();
+    </script>
+</body>
+</html>

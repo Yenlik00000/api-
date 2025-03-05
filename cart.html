@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <div class="flex space-x-1">
+                    <div class="w-5 h-5 bg-red-500 rounded-sm rotate-[300]"></div>
+                    <div class="w-5 h-5 bg-yellow-500 rounded-sm"></div>
+                    <div class="w-5 h-5 bg-green-500 rounded-sm"></div>
+                    <div class="w-5 h-5 bg-blue-500 rounded-sm"></div>
+                </div>
+                <h1 class="text-xl font-bold text-blue-600">детский мир</h1>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative w-1/3">
+                <input type="text" placeholder="Поиск" class="w-full px-4 py-2 border rounded-lg">
+            </div>
+
+            <!-- Icons -->
+            <div class="flex space-x-4">
+                <button class="text-blue-600">👤 Профиль</button>
+                <button class="text-blue-600">💳 Бонусная карта</button>
+                <button class="text-blue-600"><a href="cart.html">🛒 Корзина</a></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="bg-blue-600 text-white py-3">
+        <div class="container mx-auto flex justify-between space-x-4 overflow-x-auto px-4">
+            <a href="#" class="px-4 py-2 bg-pink-400 rounded-md">🎀 Подарки для девочек</a>
+            <a href="#" class="hover:underline">Акции</a>
+            <a href="#" class="hover:underline">Одежда и обувь</a>
+            <a href="#" class="hover:underline">Подгузники и гигиена</a>
+            <a href="#" class="hover:underline">Питание и кормление</a>
+            <a href="#" class="hover:underline">Игрушки и игры</a>
+            <a href="#" class="hover:underline">Детская комната</a>
+            <a href="#" class="hover:underline">Прогулки и путешествия</a>
+            <a href="#" class="hover:underline">Канцтовары</a>
+            <button class="px-3 py-1 bg-blue-700 rounded-md">Еще 7</button>
+        </div>
+    </nav>
+
+
+    <div class="container mx-auto mt-6 p-4 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold mb-4">Ваши товары</h2>
+        <div id="cartItems"></div>
+
+        <div class="mt-6 text-lg font-semibold">
+            Общая сумма: <span id="totalPrice">0 ₸</span>
+        </div>
+
+        <button class="bg-green-500 text-white px-6 py-2 mt-4 rounded-md hover:bg-green-600 transition">
+            Оформить заказ
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchProducts();
+        
+            function updateCartSummary() {
+                localStorage.setItem("cart", JSON.stringify(cartItems));
+            }
+        
+            async function fetchProducts() {
+                try {
+                    const response = await fetch('https://fakestoreapi.com/products'); // Replace with your API
+                    const products = await response.json();
+        
+                    const container = document.getElementById('product-container');
+                    container.innerHTML = '';
+        
+                    products.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.classList.add('border-2', 'border-gray-300', 'rounded-lg', 'p-4', 'bg-white', 'shadow-md', 'text-center', 'productCard');
+                        productCard.dataset.id = product.id;
+        
+                        productCard.innerHTML = `
+                            <img src="${product.image}" alt="${product.title}" class="mx-auto mb-2 w-32 h-32 object-contain">
+                            <h3 class="text-lg font-semibold">${product.title}</h3>
+                            <p class="text-gray-600">Цена: <span class="font-bold price">${product.price} ₸</span></p>
+                            <button class="addToCart mt-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                                В корзину
+                            </button>
+                            <div class="counter hidden flex justify-center items-center mt-3">
+                                <button class="minus bg-red-500 text-white px-3 py-1 rounded-l">-</button>
+                                <span class="count px-4 py-1">1</span>
+                                <button class="plus bg-green-500 text-white px-3 py-1 rounded-r">+</button>
+                            </div>
+                        `;
+        
+                        container.appendChild(productCard);
+                    });
+        
+                    attachCartEventListeners();
+                } catch (error) {
+                    console.error("Ошибка загрузки товаров:", error);
+                }
+            }
+        
+            let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        
+            function attachCartEventListeners() {
+                document.querySelectorAll('.productCard').forEach(card => {
+                    const addToCartBtn = card.querySelector('.addToCart');
+                    const counter = card.querySelector('.counter');
+                    const countSpan = card.querySelector('.count');
+                    const minusBtn = card.querySelector('.minus');
+                    const plusBtn = card.querySelector('.plus');
+                    const priceElement = card.querySelector('.price');
+                    const productName = card.querySelector('h3').textContent;
+                    const productId = card.dataset.id;
+                    const productPrice = parseFloat(priceElement.textContent.replace(/[^0-9.]/g, ''));
+        
+                    let count = 1;
+        
+                    addToCartBtn.addEventListener("click", () => {
+                        addToCartBtn.classList.add("hidden");
+                        counter.classList.remove("hidden");
+                        card.classList.add("border-green-500");
+        
+                        let existingProduct = cartItems.find(item => item.id === productId);
+                        if (existingProduct) {
+                            existingProduct.quantity++;
+                        } else {
+                            cartItems.push({ id: productId, name: productName, price: productPrice, quantity: count });
+                        }
+        
+                        updateCartSummary();
+                    });
+        
+                    plusBtn.addEventListener("click", () => {
+                        count++;
+                        countSpan.textContent = count;
+        
+                        let existingProduct = cartItems.find(item => item.id === productId);
+                        if (existingProduct) {
+                            existingProduct.quantity = count;
+                        }
+        
+                        updateCartSummary();
+                    });
+        
+                    minusBtn.addEventListener("click", () => {
+                        if (count > 1) {
+                            count--;
+                            countSpan.textContent = count;
+        
+                            let existingProduct = cartItems.find(item => item.id === productId);
+                            if (existingProduct) {
+                                existingProduct.quantity = count;
+                            }
+                        } else {
+                            counter.classList.add("hidden");
+                            addToCartBtn.classList.remove("hidden");
+                            card.classList.remove("border-green-500");
+        
+                            cartItems = cartItems.filter(item => item.id !== productId);
+                        }
+        
+                        updateCartSummary();
+                    });
+                });
+            }
+        });
+        
+        
+    </script>
+
+</body>
+</html>
